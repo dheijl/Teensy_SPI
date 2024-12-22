@@ -10,9 +10,9 @@
             "includePath": [
                 "/home/danny/Documenten/GitHub/Teensy/include",
                 "/home/danny/Documenten/GitHub/Teensy/src",
-                "/home/danny/Documenten/GitHub/Teensy/.pio/libdeps/teensy41/tgx/src",
                 "/home/danny/Documenten/GitHub/Teensy/.pio/libdeps/teensy41/ILI9341_T4/src",
                 "/home/danny/.platformio/packages/framework-arduinoteensy/libraries/SPI",
+                "/home/danny/Documenten/GitHub/Teensy/.pio/libdeps/teensy41/tgx/src",
                 "/home/danny/.platformio/packages/framework-arduinoteensy/cores/teensy4",
                 "/home/danny/.platformio/packages/framework-arduinoteensy/libraries/ADC",
                 "/home/danny/.platformio/packages/framework-arduinoteensy/libraries/AccelStepper/src",
@@ -119,9 +119,9 @@
                 "path": [
                     "/home/danny/Documenten/GitHub/Teensy/include",
                     "/home/danny/Documenten/GitHub/Teensy/src",
-                    "/home/danny/Documenten/GitHub/Teensy/.pio/libdeps/teensy41/tgx/src",
                     "/home/danny/Documenten/GitHub/Teensy/.pio/libdeps/teensy41/ILI9341_T4/src",
                     "/home/danny/.platformio/packages/framework-arduinoteensy/libraries/SPI",
+                    "/home/danny/Documenten/GitHub/Teensy/.pio/libdeps/teensy41/tgx/src",
                     "/home/danny/.platformio/packages/framework-arduinoteensy/cores/teensy4",
                     "/home/danny/.platformio/packages/framework-arduinoteensy/libraries/ADC",
                     "/home/danny/.platformio/packages/framework-arduinoteensy/libraries/AccelStepper/src",

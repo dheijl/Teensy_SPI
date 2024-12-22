@@ -45,9 +45,6 @@ const unsigned long SPI_SPEED = 24000000;
 // screen driver object
 ILI9341_t3 tft(PIN_CS1, PIN_DC1, PIN_RESET1, PIN_MOSI1, PIN_SCK1, PIN_MISO1); // for screen on SPI1
 
-// framebuffers
-DMAMEM uint16_t fb[LX * LY]; // internal fb used by the library for the screen
-
 void setup()
 {
   // put your setup code here, to run once:

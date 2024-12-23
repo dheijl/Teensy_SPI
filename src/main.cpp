@@ -32,40 +32,44 @@ const uint8_t PIN_DC1 = 38;   // mandatory, can be any pin but using pin 0 (or 3
 
 const uint8_t PIN_CS1 = 30;         // optional (but recommended), can be any pin.
 const uint8_t PIN_RESET1 = 29;      // optional (but recommended), can be any pin.
-const uint8_t PIN_BACKLIGHT1 = 255; // optional, set this only if the screen LED pin is connected directly to the Teensy.
+const uint8_t PIN_BACKLIGHT1 = 2;   // optional, set this only if the screen LED pin is connected directly to the Teensy.
 const uint8_t PIN_TOUCH_IRQ1 = 255; // optional. set this only if the touchscreen is connected on the same SPI bus
 const uint8_t PIN_TOUCH_CS1 = 255;  // optional. set this only if the touchscreen is connected on the same SPI bus
 
 const unsigned long SPI_SPEED = 24000000;
 
 // screen size in portrait mode
-#define LX 240
-#define LY 320
-
+#define LPORTRAIT 1
+#define LXP 240
+#define LYP 320
+// screen size in landscape mode
+#define LLANDSCAPE 0
+#define LXP 320
+#define LYP 240
 // screen driver object
 ILI9341_t3 tft(PIN_CS1, PIN_DC1, PIN_RESET1, PIN_MOSI1, PIN_SCK1, PIN_MISO1); // for screen on SPI1
 
 void setup()
 {
   // put your setup code here, to run once:
-  Serial.begin(9600);
+  Serial.begin(115200);
+  while (!Serial)
+    ; // wait for Arduino Serial Monitor
+  Serial.println("ILI9341 Test!");
 
   // make sure backlight is on
   if (PIN_BACKLIGHT1 != 255)
   {
     pinMode(PIN_BACKLIGHT1, OUTPUT);
-    digitalWrite(PIN_BACKLIGHT1, HIGH);
+    // digitalWrite(PIN_BACKLIGHT1, HIGH);
+    analogWrite(PIN_BACKLIGHT1, 128); // PWM backlight level 50 %
   }
   tft.setClock(SPI_SPEED);
   tft.fillScreen(ILI9341_BLACK);
   tft.setTextColor(ILI9341_YELLOW);
+  tft.setRotation(LPORTRAIT);
   tft.setTextSize(2);
   tft.println("Waiting for Arduino Serial Monitor...");
-
-  Serial.begin(9600);
-  while (!Serial)
-    ; // wait for Arduino Serial Monitor
-  Serial.println("ILI9341 Test!");
 
   tft.println();
 }

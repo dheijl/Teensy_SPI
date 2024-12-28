@@ -8,6 +8,8 @@
 // the screen driver library
 #include <ILI9341_t3n.h>
 
+#undef DEBUG
+
 //
 // IL9341 is WIRED TO SPI1
 //
@@ -38,30 +40,41 @@ const uint8_t PIN_TOUCH_CS1 = 255;  // optional. set this only if the touchscree
 
 const uint32_t SPI_SPEED = 24000000;
 
+#define LANDSCAPE
+
+const uint8_t ROT_PORTRAIT = 1;
+const uint8_t ROT_LANDSCAPE = 0;
+
+#ifdef PORTRAIT
 // screen size in portrait mode
-#define LPORTRAIT 1
-#define LXP 240
-#define LYP 320
+const uint32_t LXP = 240;
+const uint32_t LYP = 320;
+#endif
+#ifdef LANDSCAPE
 // screen size in landscape mode
-/*
-#define LLANDSCAPE 0
-#define LXP 320
-#define LYP 240
-*/
+const uint32_t LXP = 320;
+const uint32_t LYP = 240;
+#endif
 // screen driver object
-static ILI9341_t3n tft(PIN_CS0, PIN_DC0, PIN_RESET0, PIN_MOSI0, PIN_SCK0, PIN_MISO0); // for screen on SPI1
+static ILI9341_t3n tft(PIN_CS0, PIN_DC0, PIN_RESET0, PIN_MOSI0, PIN_SCK0, PIN_MISO0); // for screen on SPI0
 
 static uint32_t counter = 0;
 
 void setup()
 {
   // put your setup code here, to run once:
-  Serial.begin(9600);
+  Serial.begin(115200);
   for (int i = 0; i < 1000; i++)
   {
     delay(1);
+    if (Serial.available())
+    {
+      break;
+    }
   }
+#ifdef DEBUG
   Serial.println("ILI9341 Test!");
+#endif
 
   // make sure backlight is on
   if (PIN_BACKLIGHT1 != 255)
@@ -83,26 +96,23 @@ void setup()
   SPI1.endTransaction();
 */
   pinMode(PIN_CS0, OUTPUT);
-  tft.begin();
-  // tft.setClock(SPI_SPEED);
+  tft.begin(); // use default speed (write 30 MHz/ read 2 MHz)
   tft.fillScreen(ILI9341_BLACK);
-  /**/
-  tft.setTextColor(ILI9341_YELLOW);
-  tft.setRotation(LPORTRAIT);
-  tft.setTextSize(2);
+  tft.setTextColor(ILI9341_RED);
+  tft.setRotation(ROT_PORTRAIT);
+  tft.setTextSize(1);
   tft.println("tft initialized on SPI 0");
-
-  // tft.println();
-  /**/
 }
 
 void loop()
 {
-  // put your main code here, to run repeatedly:
+// put your main code here, to run repeatedly:
+#ifdef DEBUG
   Serial.println("Tick");
+#endif
   tft.print("T");
   ++counter;
-  if (counter > 512)
+  if (counter > 2048)
   {
     tft.setCursor(0, 0);
     tft.fillScreen(ILI9341_BLACK);

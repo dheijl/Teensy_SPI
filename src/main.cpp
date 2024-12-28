@@ -11,10 +11,10 @@
 //
 // AU IS WIRED TO SPI0
 //
-#define PIN_SCK0 13
-#define PIN_MISO0 12
-#define PIN_MOSI0 11
-#define PIN_CS0 9
+const uint8_t PIN_SCK0 = 13;
+const uint8_t PIN_MISO0 = 12;
+const uint8_t PIN_MOSI0 = 11;
+const uint8_t PIN_CS0 = 10;
 /* if SPI0 is IL9341
 #define PIN_DC0 36   // mandatory, can be any pin but using pin 10 (or 36 or 37 on T4.1) provides greater performance
 #define PIN_RESET0 6       // optional (but recommended), can be any pin.
@@ -30,9 +30,9 @@ const uint8_t PIN_MISO1 = 1;  // mandatory  (if the display has no MISO line, se
 const uint8_t PIN_MOSI1 = 26; // mandatory
 const uint8_t PIN_DC1 = 38;   // mandatory, can be any pin but using pin 0 (or 38 on T4.1) provides greater performance
 
-const uint8_t PIN_CS1 = 30;         // optional (but recommended), can be any pin.
+const uint8_t PIN_CS1 = 0;         // optional (but recommended), can be any pin.
 const uint8_t PIN_RESET1 = 29;      // optional (but recommended), can be any pin.
-const uint8_t PIN_BACKLIGHT1 = 2;   // optional, set this only if the screen LED pin is connected directly to the Teensy.
+const uint8_t PIN_BACKLIGHT1 = 255; // optional, set this only if the screen LED pin is connected directly to the Teensy.
 const uint8_t PIN_TOUCH_IRQ1 = 255; // optional. set this only if the touchscreen is connected on the same SPI bus
 const uint8_t PIN_TOUCH_CS1 = 255;  // optional. set this only if the touchscreen is connected on the same SPI bus
 
@@ -43,9 +43,11 @@ const unsigned long SPI_SPEED = 24000000;
 #define LXP 240
 #define LYP 320
 // screen size in landscape mode
+/*
 #define LLANDSCAPE 0
 #define LXP 320
 #define LYP 240
+*/
 // screen driver object
 ILI9341_t3 tft(PIN_CS1, PIN_DC1, PIN_RESET1, PIN_MOSI1, PIN_SCK1, PIN_MISO1); // for screen on SPI1
 

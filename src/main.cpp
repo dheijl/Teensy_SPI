@@ -36,7 +36,7 @@ const uint8_t PIN_BACKLIGHT1 = 255; // optional, set this only if the screen LED
 const uint8_t PIN_TOUCH_IRQ1 = 255; // optional. set this only if the touchscreen is connected on the same SPI bus
 const uint8_t PIN_TOUCH_CS1 = 255;  // optional. set this only if the touchscreen is connected on the same SPI bus
 
-const unsigned long SPI_SPEED = 24000000;
+const uint32_t SPI_SPEED = 24000000;
 
 // screen size in portrait mode
 #define LPORTRAIT 1
@@ -49,7 +49,9 @@ const unsigned long SPI_SPEED = 24000000;
 #define LYP 240
 */
 // screen driver object
-ILI9341_t3n tft(PIN_CS0, PIN_DC0, PIN_RESET0, PIN_MOSI0, PIN_SCK0, PIN_MISO0); // for screen on SPI1
+static ILI9341_t3n tft(PIN_CS0, PIN_DC0, PIN_RESET0, PIN_MOSI0, PIN_SCK0, PIN_MISO0); // for screen on SPI1
+
+static uint32_t counter = 0;
 
 void setup()
 {
@@ -99,5 +101,13 @@ void loop()
   // put your main code here, to run repeatedly:
   Serial.println("Tick");
   tft.print("T");
+  ++counter;
+  if (counter > 512)
+  {
+    tft.setCursor(0, 0);
+    tft.fillScreen(ILI9341_BLACK);
+    counter = 0;
+  }
+
   delay(1000);
 }

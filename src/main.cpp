@@ -36,7 +36,7 @@ const uint8_t PIN_BACKLIGHT1 = 255; // optional, set this only if the screen LED
 const uint8_t PIN_TOUCH_IRQ1 = 255; // optional. set this only if the touchscreen is connected on the same SPI bus
 const uint8_t PIN_TOUCH_CS1 = 255;  // optional. set this only if the touchscreen is connected on the same SPI bus
 
-const unsigned long SPI_SPEED = 4000000;
+const unsigned long SPI_SPEED = 24000000;
 
 // screen size in portrait mode
 #define LPORTRAIT 1
@@ -55,8 +55,10 @@ void setup()
 {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  while (!Serial)
-    ; // wait for Arduino Serial Monitor
+  for (int i = 0; i < 1000; i++)
+  {
+    delay(1);
+  }
   Serial.println("ILI9341 Test!");
 
   // make sure backlight is on
@@ -86,7 +88,7 @@ void setup()
   tft.setTextColor(ILI9341_YELLOW);
   tft.setRotation(LPORTRAIT);
   tft.setTextSize(2);
-  tft.println("Waiting for Arduino Serial Monitor...");
+  tft.println("tft initialized on SPI 0");
 
   // tft.println();
   /**/
@@ -96,6 +98,6 @@ void loop()
 {
   // put your main code here, to run repeatedly:
   Serial.println("Tick");
-  tft.println("Tick");
+  tft.print("T");
   delay(1000);
 }

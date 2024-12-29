@@ -116,7 +116,7 @@ void loop()
   SPI1.beginTransaction(SPISettings((int)12000000, MSBFIRST, (uint8_t)SPI_MODE1));
   digitalWrite(PIN_CS1, LOW);
   auto st = micros();
-  // SPI1.transfer(txbuf, count); // DMA transfer hangs, don't know why
+  // SPI1.transfer(txbuf, count);
   SPI1.transfer(txbuf, rxbuf, count);
   /*for (size_t i = 0; i < count; ++i)
   {
@@ -126,6 +126,9 @@ void loop()
   digitalWrite(PIN_CS1, HIGH);
   SPI1.endTransaction();
   tft.println("Transfer complete");
+  auto tt = et - st;
+  auto pc = (float)tt / (float)count;
+  tft.println("Elapsed: " + String(tt) + "µs, per char: " + String(pc) + "µs");
 #ifdef DEBUG
   // show received data
   Serial.print("RX: ");
@@ -139,9 +142,6 @@ void loop()
   }
   tft.println(">");
   Serial.println();
-  auto tt = et - st;
-  auto pc = (float)tt / (float)count;
-  tft.println("Elapsed: " + String(tt) + "µs, per char: " + String(pc) + "µs");
 #endif
 }
 

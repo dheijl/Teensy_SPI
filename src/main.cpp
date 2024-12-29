@@ -207,7 +207,6 @@ void wait_sdata()
 {
   Serial.println("Waiting for AU data ready");
   tft.println("Waiting for AU SDATA");
-  delay(500);
   while (digitalRead(PIN_SDATA_RDY) == LOW)
   {
     delay(1);

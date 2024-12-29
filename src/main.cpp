@@ -11,7 +11,7 @@
 #define DEBUG
 
 //
-// IL9341 is WIRED TO SPI1
+// IL9341 is WIRED TO SPI0
 //
 const uint8_t PIN_SCK0 = 13;
 const uint8_t PIN_MISO0 = 12;

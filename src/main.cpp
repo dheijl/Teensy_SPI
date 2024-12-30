@@ -8,6 +8,8 @@
 // the screen driver library
 #include <ILI9341_t3n.h>
 
+#include <ili9341_t3n_font_Arial.h>
+
 #define DEBUG
 
 //
@@ -49,7 +51,8 @@ const uint8_t PIN_TOUCH_CS1 = 255;  // optional. set this only if the touchscree
 
 const uint32_t SPI_SPEED = 24000000;
 
-const char *tqbf = "WIO-> the quick brown fox jumps over the lazy dog0123456789THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG\r\n";
+const char *tqbf = "the quick brown fox jumps over the lazy dog0123456789THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG\r\n\
+the quick brown fox jumps over the lazy dog0123456789THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG\r\n";
 
 #define LANDSCAPE
 
@@ -113,7 +116,7 @@ void loop()
 #endif
   tft.println("Start SPI transfer");
   // 24MHz transmit is OK, but receive is max 12 Mhz
-  SPI1.beginTransaction(SPISettings((int)12000000, MSBFIRST, (uint8_t)SPI_MODE1));
+  SPI1.beginTransaction(SPISettings((int)16000000, MSBFIRST, (uint8_t)SPI_MODE1));
   digitalWrite(PIN_CS1, LOW);
   auto st = micros();
   // SPI1.transfer(txbuf, count);
@@ -128,7 +131,7 @@ void loop()
   tft.println("Transfer complete");
   auto tt = et - st;
   auto pc = (float)tt / (float)count;
-  tft.println("Elapsed: " + String(tt) + "µs, per char: " + String(pc) + "µs");
+  tft.println("Elapsed: " + String(tt) + " micros, per char: " + String(pc) + " micros");
 #ifdef DEBUG
   // show received data
   Serial.print("RX: ");
@@ -188,9 +191,10 @@ void setup_spi_il9341()
   pinMode(PIN_CS0, OUTPUT);
   tft.begin(); // use default speed (write 30 MHz/ read 2 MHz)
   tft.fillScreen(ILI9341_BLACK);
-  tft.setTextColor(ILI9341_RED);
+  tft.setTextColor(ILI9341_WHITE);
   tft.setRotation(ROT_PORTRAIT);
-  tft.setTextSize(1);
+  tft.setFont(Arial_10);
+  // tft.setTextSize(2);
   tft.println("tft initialized on SPI 0");
 }
 

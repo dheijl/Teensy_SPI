@@ -15,16 +15,16 @@
 //
 // IL9341 is WIRED TO SPI0
 //
-const uint8_t PIN_SCK0 = 13;
-const uint8_t PIN_MISO0 = 12;
-const uint8_t PIN_MOSI0 = 11;
-const uint8_t PIN_CS0 = 10;
+constexpr uint8_t PIN_SCK0 = 13;
+constexpr uint8_t PIN_MISO0 = 12;
+constexpr uint8_t PIN_MOSI0 = 11;
+constexpr uint8_t PIN_CS0 = 10;
 // if SPI0 is IL9341
-const uint8_t PIN_DC0 = 36;         // mandatory, can be any pin but using pin 10 (or 36 or 37 on T4.1) provides greater performance
-const uint8_t PIN_RESET0 = 6;       // optional (but recommended), can be any pin.
-const uint8_t PIN_BACKLIGHT0 = 255; // optional, set this only if the screen LED pin is connected directly to the Teensy.
-const uint8_t PIN_TOUCH_IRQ0 = 255; // optional, set this only if the touchscreen is connected on the same SPI bus
-const uint8_t PIN_TOUCH_CS0 = 255;  // optional, set this only if the touchscreen is connected on the same SPI bus
+constexpr uint8_t PIN_DC0 = 36;         // mandatory, can be any pin but using pin 10 (or 36 or 37 on T4.1) provides greater performance
+constexpr uint8_t PIN_RESET0 = 6;       // optional (but recommended), can be any pin.
+constexpr uint8_t PIN_BACKLIGHT0 = 255; // optional, set this only if the screen LED pin is connected directly to the Teensy.
+constexpr uint8_t PIN_TOUCH_IRQ0 = 255; // optional, set this only if the touchscreen is connected on the same SPI bus
+constexpr uint8_t PIN_TOUCH_CS0 = 255;  // optional, set this only if the touchscreen is connected on the same SPI bus
 
 //
 // AU IS WIRED TO SPI1
@@ -37,37 +37,37 @@ const uint8_t PIN_TOUCH_CS0 = 255;  // optional, set this only if the touchscree
 //    • data_rdy = A8->Teensy pin 2(OUT2)(black)
 //    • GND->Teensy GND(green)
 
-const uint8_t PIN_SCK1 = 27;
-const uint8_t PIN_MISO1 = 1;     // mandatory  (if the display has no MISO line, set this to 255 but then VSync will be disabled)
-const uint8_t PIN_MOSI1 = 26;    // mandatory
-const uint8_t PIN_DC1 = 38;      // mandatory, can be any pin but using pin 0 (or 38 on T4.1) provides greater performance
-const uint8_t PIN_CS1 = 0;       // optional (but recommended), can be any pin.
-const uint8_t PIN_SDATA_RDY = 5; // AU DATA READY signal (IN2)
+constexpr uint8_t PIN_SCK1 = 27;
+constexpr uint8_t PIN_MISO1 = 1;     // mandatory  (if the display has no MISO line, set this to 255 but then VSync will be disabled)
+constexpr uint8_t PIN_MOSI1 = 26;    // mandatory
+constexpr uint8_t PIN_DC1 = 38;      // mandatory, can be any pin but using pin 0 (or 38 on T4.1) provides greater performance
+constexpr uint8_t PIN_CS1 = 0;       // optional (but recommended), can be any pin.
+constexpr uint8_t PIN_SDATA_RDY = 5; // AU DATA READY signal (IN2)
 
-const uint8_t PIN_RESET1 = 255;     // 29 optional (but recommended), can be any pin.
-const uint8_t PIN_BACKLIGHT1 = 255; // optional, set this only if the screen LED pin is connected directly to the Teensy.
-const uint8_t PIN_TOUCH_IRQ1 = 255; // optional. set this only if the touchscreen is connected on the same SPI bus
-const uint8_t PIN_TOUCH_CS1 = 255;  // optional. set this only if the touchscreen is connected on the same SPI bus
+constexpr uint8_t PIN_RESET1 = 255;     // 29 optional (but recommended), can be any pin.
+constexpr uint8_t PIN_BACKLIGHT1 = 255; // optional, set this only if the screen LED pin is connected directly to the Teensy.
+constexpr uint8_t PIN_TOUCH_IRQ1 = 255; // optional. set this only if the touchscreen is connected on the same SPI bus
+constexpr uint8_t PIN_TOUCH_CS1 = 255;  // optional. set this only if the touchscreen is connected on the same SPI bus
 
-const uint32_t SPI_SPEED = 24000000;
+constexpr uint32_t SPI_SPEED = 24000000;
 
-const char *tqbf = "the quick brown fox jumps over the lazy dog0123456789THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG\r\n\
+constexpr char *tqbf = "the quick brown fox jumps over the lazy dog0123456789THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG\r\n\
 the quick brown fox jumps over the lazy dog0123456789THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG\r\n";
 
 #define LANDSCAPE
 
-const uint8_t ROT_PORTRAIT = 1;
-const uint8_t ROT_LANDSCAPE = 0;
+constexpr uint8_t ROT_PORTRAIT = 1;
+constexpr uint8_t ROT_LANDSCAPE = 0;
 
 #ifdef PORTRAIT
 // screen size in portrait mode
-const uint32_t LXP = 240;
-const uint32_t LYP = 320;
+constexpr uint32_t LXP = 240;
+constexpr uint32_t LYP = 320;
 #endif
 #ifdef LANDSCAPE
 // screen size in landscape mode
-const uint32_t LXP = 320;
-const uint32_t LYP = 240;
+constexpr uint32_t LXP = 320;
+constexpr uint32_t LYP = 240;
 #endif
 // screen driver object
 static ILI9341_t3n tft(PIN_CS0, PIN_DC0, PIN_RESET0, PIN_MOSI0, PIN_SCK0, PIN_MISO0); // for screen on SPI0
@@ -115,18 +115,13 @@ void loop()
   Serial.println();
 #endif
   tft.println("Start SPI transfer");
-  // 24MHz transmit is OK, but receive is max 12 Mhz
+  // AU seems OK with Teensy 4.1 up to 16 MHz
   SPI1.beginTransaction(SPISettings((int)16000000, MSBFIRST, (uint8_t)SPI_MODE1));
-  digitalWrite(PIN_CS1, LOW);
+  digitalWriteFast(PIN_CS1, LOW);
   auto st = micros();
-  // SPI1.transfer(txbuf, count);
   SPI1.transfer(txbuf, rxbuf, count);
-  /*for (size_t i = 0; i < count; ++i)
-  {
-    rxbuf[i] = SPI1.transfer(txbuf[i]);
-  }*/
   auto et = micros();
-  digitalWrite(PIN_CS1, HIGH);
+  digitalWriteFast(PIN_CS1, HIGH);
   SPI1.endTransaction();
   tft.println("Transfer complete");
   auto tt = et - st;
@@ -143,12 +138,12 @@ void loop()
       tft.print(String((char)rxbuf[i]));
     }
   }
-  tft.println(">");
+  tft.println(".");
   Serial.println();
 #endif
 }
 
-void setup_spi_au()
+static void setup_spi_au()
 {
   tft.println("AU SPI1 setup");
   pinMode(PIN_SDATA_RDY, INPUT);
@@ -164,9 +159,12 @@ void setup_spi_au()
   }
   if (SPI1.pinIsSCK(PIN_SCK1))
   {
-    tft.print("SCK=HW");
+    tft.print("SCK=HW, ");
   }
-  tft.println();
+  if (SPI1.pinIsChipSelect(PIN_CS1))
+  {
+    tft.println("CS=HW");
+  }
   // SPI1.setCS(PIN_CS1); // do not use
   SPI1.setMOSI(PIN_MOSI1);
   SPI1.setMISO(PIN_MISO1);
@@ -176,7 +174,7 @@ void setup_spi_au()
   tft.println("AU SPI1 initialised");
 }
 
-void setup_spi_il9341()
+static void setup_spi_il9341()
 {
 #ifdef DEBUG
   Serial.println("ILI9341 setup");
@@ -207,7 +205,7 @@ static void print_hex(uint8_t x)
   Serial.print(x, HEX);
 }
 
-void wait_sdata()
+static void wait_sdata()
 {
   Serial.println("Waiting for AU data ready");
   tft.println("Waiting for AU SDATA");

@@ -114,13 +114,13 @@ void loop()
 #endif
   tft.println("Start SPI transfer");
   // AU seems OK with Teensy 4.1 up to 29 MHz
-  SPI1.beginTransaction(SPISettings((int)16000000, MSBFIRST, (uint8_t)SPI_MODE1));
   digitalWrite(PIN_CS1, LOW);
+  SPI1.beginTransaction(SPISettings((int)23000000, MSBFIRST, (uint8_t)SPI_MODE1));
   auto st = micros();
   SPI1.transfer(txbuf, rxbuf, count);
   auto et = micros();
-  digitalWrite(PIN_CS1, HIGH);
   SPI1.endTransaction();
+  digitalWrite(PIN_CS1, HIGH);
   tft.println("Transfer complete");
   auto tt = et - st;
   auto pc = (float)tt / (float)count;
@@ -204,5 +204,5 @@ static void wait_sdata()
   }
   Serial.println("AU data ready");
   tft.println("Got AU SDATA");
- //delay(250);
+  delay(1000);
 }

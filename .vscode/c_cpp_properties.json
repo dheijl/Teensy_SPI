@@ -10,6 +10,7 @@
             "includePath": [
                 "/home/danny/Documenten/GitHub/Teensy/include",
                 "/home/danny/Documenten/GitHub/Teensy/src",
+                "/home/danny/Documenten/GitHub/Teensy/.pio/libdeps/teensy41/WiFi101_Generic/src",
                 "/home/danny/Documenten/GitHub/Teensy/.pio/libdeps/teensy41/ILI9341_t3n/src",
                 "/home/danny/.platformio/packages/framework-arduinoteensy/libraries/ssd1351",
                 "/home/danny/.platformio/packages/framework-arduinoteensy/libraries/SPI",
@@ -118,6 +119,7 @@
                 "path": [
                     "/home/danny/Documenten/GitHub/Teensy/include",
                     "/home/danny/Documenten/GitHub/Teensy/src",
+                    "/home/danny/Documenten/GitHub/Teensy/.pio/libdeps/teensy41/WiFi101_Generic/src",
                     "/home/danny/Documenten/GitHub/Teensy/.pio/libdeps/teensy41/ILI9341_t3n/src",
                     "/home/danny/.platformio/packages/framework-arduinoteensy/libraries/ssd1351",
                     "/home/danny/.platformio/packages/framework-arduinoteensy/libraries/SPI",

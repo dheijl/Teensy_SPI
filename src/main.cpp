@@ -113,7 +113,7 @@ void loop()
   Serial.println();
 #endif
   tft.println("Start SPI transfer");
-  // AU seems OK with Teensy 4.1 up to 29 MHz
+  // AU seems OK with Teensy 4.1 up to 38 MHz when running the AU SPI code with a 300 MHz clock
   digitalWrite(PIN_CS1, LOW);
   SPI1.beginTransaction(SPISettings((int)38000000, MSBFIRST, (uint8_t)SPI_MODE1));
   auto st = micros();
